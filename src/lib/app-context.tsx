@@ -21,6 +21,7 @@ type Ctx = {
   t: (k: keyof Dict, n?: string | number) => string;
   rtl: boolean;
   botUsername: string;
+  loadError: string;
 };
 
 const AppCtx = createContext<Ctx | null>(null);
@@ -33,6 +34,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [dict, setDict] = useState<Dict>(BASE);
   const [rtl, setRtl] = useState(false);
   const [botUsername, setBot] = useState("");
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     let tries = 0;
@@ -50,7 +52,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       getTranslations({ data: { lang } }).then((d) => setDict(d as Dict)).catch(() => {});
       bootstrap({ data: { initData: wa.initData } })
         .then((r) => { setBot(r.bot); setState(r); })
-        .catch(() => setInTelegram(false))
+        .catch((e) => { setLoadError(errMsg(e)); setInTelegram(false); })
         .finally(() => setReady(true));
     };
     start();
@@ -64,7 +66,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const t = useCallback((k: keyof Dict, n?: string | number) => tr(dict, k, n), [dict]);
 
   return (
-    <AppCtx.Provider value={{ ready, inTelegram, initData, state, setState, reload, t, rtl, botUsername }}>
+    <AppCtx.Provider value={{ ready, inTelegram, initData, state, setState, reload, t, rtl, botUsername, loadError }}>
       {children}
     </AppCtx.Provider>
   );
