@@ -42,7 +42,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (!wa || !wa.initData) { setInTelegram(false); setReady(true); return; }
       wa.ready(); wa.expand();
       try { wa.setHeaderColor?.("#141827"); wa.setBackgroundColor?.("#141827"); } catch {}
-      const lang = (wa.initDataUnsafe?.user?.language_code || navigator.language || "en").split("-")[0].toLowerCase();
+      const lang = ((wa.initDataUnsafe?.user?.language_code || navigator.language || "en").split("-")[0] || "en").toLowerCase();
       setRtl(RTL.has(lang));
       document.documentElement.lang = lang;
       document.documentElement.dir = RTL.has(lang) ? "rtl" : "ltr";

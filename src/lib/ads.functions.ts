@@ -37,7 +37,7 @@ export const bootstrap = createServerFn({ method: "POST" })
     const { user, startParam } = verifyInitData(data.initData);
     const s = await db();
     const { data: existing } = await s.from("ads_users").select("id").eq("telegram_id", user.id).maybeSingle();
-    const lang = (user.language_code || "en").split("-")[0].toLowerCase();
+    const lang = ((user.language_code || "en").split("-")[0] || "en").toLowerCase();
     if (!existing) {
       let referredBy: number | null = null;
       const m = startParam?.match(/^ref_?(\d+)$/);
