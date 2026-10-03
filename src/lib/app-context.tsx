@@ -43,7 +43,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (!wa && tries++ < 20) return void setTimeout(start, 100);
       if (!wa || !wa.initData) { setInTelegram(false); setReady(true); return; }
       wa.ready(); wa.expand();
-      try { wa.setHeaderColor?.("#141827"); wa.setBackgroundColor?.("#141827"); } catch {}
+      try {
+        wa.setHeaderColor?.("#141827"); wa.setBackgroundColor?.("#141827");
+        if (wa.isVersionAtLeast?.("8.0") && !wa.isFullscreen) wa.requestFullscreen?.();
+      } catch {}
       const lang = ((wa.initDataUnsafe?.user?.language_code || navigator.language || "en").split("-")[0] || "en").toLowerCase();
       setRtl(RTL.has(lang));
       document.documentElement.lang = lang;
