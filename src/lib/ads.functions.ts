@@ -104,12 +104,12 @@ export const spin = createServerFn({ method: "POST" })
     const mult = activeMult(u);
     // weights for winnable segments
     const weights: Record<number, number> = { 0: 30, 1: 8, 2: 18, 4: 24, 5: 4, 6: 8, 8: 3, 9: 8, 10: 1, 11: 3 };
-    const entries = Object.entries(weights).map(([i, w]) => [Number(i), w * (WHEEL[Number(i)].c === "ADS" && WHEEL[Number(i)].a >= 250 ? mult : 1)] as const);
+    const entries = Object.entries(weights).map(([i, w]) => [Number(i), w * (WHEEL[Number(i)]!.c === "ADS" && WHEEL[Number(i)]!.a >= 250 ? mult : 1)] as const);
     const total = entries.reduce((a, [, w]) => a + w, 0);
     let pick = Math.random() * total;
-    let index = entries[0][0];
+    let index = entries[0]![0];
     for (const [i, w] of entries) { if ((pick -= w) <= 0) { index = i; break; } }
-    const seg = WHEEL[index];
+    const seg = WHEEL[index]!;
     const amount = seg.c === "ADS" ? Math.round(seg.a * mult) : seg.a;
     const col = seg.c.toLowerCase();
     await s.from("ads_users").update({ [col]: Number(u[col]) + amount, tickets: u.tickets - 1 }).eq("telegram_id", u.telegram_id);
