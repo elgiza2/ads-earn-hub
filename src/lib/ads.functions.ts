@@ -55,7 +55,8 @@ export const bootstrap = createServerFn({ method: "POST" })
     } else {
       await s.from("ads_users").update({ first_name: user.first_name, username: user.username, photo_url: user.photo_url, language: lang }).eq("telegram_id", user.id);
     }
-    return loadState(s, user.id);
+    const me = await tg("getMe", {}).catch(() => null);
+    return { ...(await loadState(s, user.id)), bot: (me?.result?.username as string) || "" };
   });
 
 export const refresh = createServerFn({ method: "POST" })

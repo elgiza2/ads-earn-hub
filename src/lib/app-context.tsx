@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-export type AppState = Awaited<ReturnType<typeof bootstrap>>;
+export type AppState = Awaited<ReturnType<typeof refresh>>;
 
 type Ctx = {
   ready: boolean;
@@ -32,6 +32,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AppState | null>(null);
   const [dict, setDict] = useState<Dict>(BASE);
   const [rtl, setRtl] = useState(false);
+  const [botUsername, setBot] = useState("");
 
   useEffect(() => {
     let tries = 0;
@@ -48,7 +49,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setInitData(wa.initData);
       getTranslations({ data: { lang } }).then((d) => setDict(d as Dict)).catch(() => {});
       bootstrap({ data: { initData: wa.initData } })
-        .then(setState)
+        .then((r) => { setBot(r.bot); setState(r); })
         .catch(() => setInTelegram(false))
         .finally(() => setReady(true));
     };
@@ -63,7 +64,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const t = useCallback((k: keyof Dict, n?: string | number) => tr(dict, k, n), [dict]);
 
   return (
-    <AppCtx.Provider value={{ ready, inTelegram, initData, state, setState, reload, t, rtl, botUsername: "" }}>
+    <AppCtx.Provider value={{ ready, inTelegram, initData, state, setState, reload, t, rtl, botUsername }}>
       {children}
     </AppCtx.Provider>
   );
