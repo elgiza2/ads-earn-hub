@@ -103,7 +103,6 @@
   mask-composite: exclude;
   pointer-events: none;
 }
-.glass { composes: liquid-glass; }
 
 @utility glass {
   background: oklch(1 0 0 / 6%);

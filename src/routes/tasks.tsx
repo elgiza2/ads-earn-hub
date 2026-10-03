@@ -57,14 +57,14 @@ function Tasks() {
             <Card key={task.key} className="!p-4">
               <div className="flex items-center gap-3">
                 <div className="min-w-0 flex-1">
-                  <div className="font-semibold">{task.title}</div>
+                  <div className="font-normal">{task.title}</div>
                   <div className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Coin c={task.reward_currency} size={16} />
                     <span className="tabular-nums">{fmt(Number(task.reward_amount), task.reward_currency)} {task.reward_currency}</span>
                   </div>
                 </div>
                 {done ? (
-                  <span className="rounded-full px-3 py-1.5 text-sm font-semibold text-success">{t("done")}</span>
+                  <span className="rounded-full px-3 py-1.5 text-sm font-normal text-success">{t("done")}</span>
                 ) : task.kind === "channel" && !ready ? (
                   <button className="pill-ghost !py-2 text-sm" onClick={() => open(task)}>{t("open")}</button>
                 ) : (

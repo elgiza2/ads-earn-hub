@@ -33,7 +33,7 @@ function Friends() {
   return (
     <Page title={t("friends_title")} sub={t("friends_sub")}>
       <Card className="text-center">
-        <div className="text-6xl font-bold tabular-nums">{u.referrals}</div>
+        <div className="text-6xl font-normal tabular-nums">{u.referrals}</div>
         <div className="label-caps mt-1">{t("your_friends")}</div>
         <div className="glass-strong mt-5 truncate rounded-2xl px-4 py-3 text-sm text-muted-foreground" dir="ltr">{link}</div>
         <div className="mt-4 grid grid-cols-2 gap-3">
@@ -42,7 +42,7 @@ function Friends() {
         </div>
       </Card>
 
-      <h2 className="mb-3 mt-7 text-xl font-bold">{t("your_friends")}</h2>
+      <h2 className="mb-3 mt-7 text-xl font-normal">{t("your_friends")}</h2>
       <Card className="!p-2">
         {state!.friends.length === 0 ? (
           <p className="p-4 text-center text-muted-foreground">{t("no_friends")}</p>

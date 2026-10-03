@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Play } from "lucide-react";
 import { toast } from "sonner";
 import { Page, Card, BalanceStrip } from "@/components/ads/Shell";
 import { Coin } from "@/components/ads/Coin";
@@ -65,32 +66,33 @@ function Earn() {
 
       <Card className="relative overflow-hidden text-center">
         <div className="label-caps">{t("watch_title")}</div>
-        <div className="mx-auto my-6 flex h-40 w-40 items-center justify-center rounded-full glass-strong">
+        <div className="mx-auto my-6 flex h-40 w-40 items-center justify-center rounded-full liquid-glass" style={{ background: "var(--glass-strong)" }}>
           {last ? (
             <div className="flex flex-col items-center gap-2 animate-in zoom-in-50 duration-300">
               <Coin c={last.currency} size={44} />
-              <div className="text-2xl font-bold tabular-nums">+{fmt(last.amount, last.currency)}</div>
+              <div className="text-2xl font-normal tabular-nums">+{fmt(last.amount, last.currency)}</div>
               <div className="text-xs text-muted-foreground">{last.currency}</div>
             </div>
           ) : (
-            <div className="text-5xl font-black tracking-tighter">ADS</div>
+            <div className="text-5xl font-normal tracking-tighter">ADS</div>
           )}
         </div>
         {last && <p className="mb-4 text-sm font-medium text-success">{t("plus_ticket")}</p>}
-        <button className="pill-accent w-full text-lg" disabled={busy || wait > 0} onClick={watch}>
+        <button className="pill-accent w-full justify-start" disabled={busy || wait > 0} onClick={watch}>
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-accent-foreground"><Play size={18} strokeWidth={2.5} /></span>
           {busy ? t("loading_ad") : wait > 0 ? t("wait_btn", wait) : t("watch_btn")}
         </button>
-        {u.mult > 1 && <p className="mt-3 text-sm font-semibold text-accent">{t("booster_active", u.mult)}</p>}
+        {u.mult > 1 && <p className="mt-3 text-sm font-normal text-accent">{t("booster_active", u.mult)}</p>}
       </Card>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <Card>
           <div className="label-caps">{t("ads_watched")}</div>
-          <div className="mt-1 text-3xl font-bold tabular-nums">{u.ads_watched.toLocaleString()}</div>
+          <div className="mt-1 text-3xl font-normal tabular-nums">{u.ads_watched.toLocaleString()}</div>
         </Card>
         <Card>
           <div className="label-caps">{t("tickets")}</div>
-          <div className="mt-1 text-3xl font-bold tabular-nums">{u.tickets}</div>
+          <div className="mt-1 text-3xl font-normal tabular-nums">{u.tickets}</div>
         </Card>
       </div>
 

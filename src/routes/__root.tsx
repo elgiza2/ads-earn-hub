@@ -21,8 +21,8 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="aura" />
-      <div className="glass max-w-md rounded-3xl p-8 text-center">
-        <h1 className="text-6xl font-bold">404</h1>
+      <div className="glass max-w-md rounded-2xl p-8 text-center">
+        <h1 className="text-6xl font-normal">404</h1>
         <div className="mt-6">
           <Link to="/" className="pill-btn">ADS</Link>
         </div>
@@ -40,8 +40,8 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="aura" />
-      <div className="glass max-w-md rounded-3xl p-8 text-center">
-        <h1 className="text-xl font-semibold">Something went wrong</h1>
+      <div className="glass max-w-md rounded-2xl p-8 text-center">
+        <h1 className="text-xl font-normal">Something went wrong</h1>
         <button onClick={() => { router.invalidate(); reset(); }} className="pill-btn mt-6">Try again</button>
       </div>
     </div>
@@ -98,9 +98,9 @@ function Gate({ children }: { children: ReactNode }) {
   if (!inTelegram || !state) {
     return (
       <div className="flex min-h-dvh items-center justify-center px-6">
-        <div className="glass max-w-sm rounded-3xl p-8 text-center">
-          <div className="text-5xl font-black tracking-tighter">ADS</div>
-          <h1 className="mt-4 text-xl font-semibold">{t("open_in_tg")}</h1>
+        <div className="glass max-w-sm rounded-2xl p-8 text-center">
+          <div className="text-5xl font-normal tracking-tighter">ADS</div>
+          <h1 className="mt-4 text-xl font-normal">{t("open_in_tg")}</h1>
           <p className="mt-2 text-sm text-muted-foreground">{t("open_in_tg_sub")}</p>
         </div>
       </div>
