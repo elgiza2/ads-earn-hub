@@ -180,7 +180,9 @@ export const completeTask = createServerFn({ method: "POST" })
     if (t.kind === "channel" || (t.kind === "link" && /^https:\/\/t\.me\/[A-Za-z0-9_]{4,}\/?$/.test(t.link || ""))) {
       const r = await tg("getChatMember", { chat_id: t.kind === "channel" ? `@${CHANNEL}` : `@${String(t.link).replace(/^https:\/\/t\.me\//, "").replace(/\/$/, "")}`, user_id: u.telegram_id });
       const st = r?.result?.status;
-      if (!["member", "administrator", "creator", "restricted"].includes(st)) throw new Error("not_joined");
+      // Custom links: only enforce membership when the bot can actually see that chat.
+      const enforce = t.kind === "channel" || r?.ok;
+      if (enforce && !["member", "administrator", "creator", "restricted"].includes(st)) throw new Error("not_joined");
     }
     const { error } = await s.from("ads_user_tasks").insert({ telegram_id: u.telegram_id, task_key: t.key });
     if (error) throw new Error("done");
