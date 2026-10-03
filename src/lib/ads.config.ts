@@ -2,7 +2,7 @@ export const MONETAG_ZONE = "11946924";
 export const CHANNEL = "adsgrq";
 export const TON_WALLET = "UQAp1QxnLJ2z44IooUovvtVShw7hJBEdxCRV3RlbCYC3D8qj";
 export const MIN_WITHDRAW = 0.5;
-export const AD_COOLDOWN_SEC = 12;
+export const AD_COOLDOWN_SEC = 2;
 
 export type Currency = "USDT" | "GRAM" | "ADS";
 
