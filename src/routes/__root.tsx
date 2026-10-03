@@ -89,7 +89,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function Gate({ children }: { children: ReactNode }) {
-  const { ready, inTelegram, state, t } = useApp();
+  const { ready, inTelegram, state, t, loadError } = useApp();
   if (!ready) {
     return (
       <div className="flex min-h-dvh items-center justify-center">
@@ -102,8 +102,17 @@ function Gate({ children }: { children: ReactNode }) {
       <div className="flex min-h-dvh items-center justify-center px-6">
         <div className="glass max-w-sm rounded-2xl p-8 text-center">
           <div className="text-5xl font-normal tracking-tighter">ADS</div>
-          <h1 className="mt-4 text-xl font-normal">{t("open_in_tg")}</h1>
-          <p className="mt-2 text-sm text-muted-foreground">{t("open_in_tg_sub")}</p>
+          {loadError ? (
+            <>
+              <h1 className="mt-4 text-xl font-normal">Something went wrong</h1>
+              <p className="mt-2 break-words text-sm text-muted-foreground">{loadError}</p>
+            </>
+          ) : (
+            <>
+              <h1 className="mt-4 text-xl font-normal">{t("open_in_tg")}</h1>
+              <p className="mt-2 text-sm text-muted-foreground">{t("open_in_tg_sub")}</p>
+            </>
+          )}
         </div>
       </div>
     );

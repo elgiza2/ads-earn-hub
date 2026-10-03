@@ -22,18 +22,27 @@ export const Route = createFileRoute("/api/public/ads-bot")({
           const appUrl = process.env["ADS_APP_URL"] || new URL(request.url).origin;
           const param = text.split(" ")[1];
           const url = param ? `${appUrl}/?tgWebAppStartParam=${encodeURIComponent(param)}` : appUrl;
-          const name = msg.from?.first_name ?? "";
-          await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          const caption = [
+            "<b>Welcome to ADS</b>",
+            "",
+            "<b>Watch ads and earn USDT, GRAM and ADS.</b>",
+            "<b>Every ad gives you a roulette ticket.</b>",
+            "<b>Invite friends to get more tickets.</b>",
+            "",
+            "<b>Channel: @adsgrq</b>",
+          ].join("\n");
+          await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({
               chat_id: msg.chat.id,
-              text: `👋 ${name}\n\n<b>ADS</b> — Watch ads and earn USDT, GRAM & ADS.\n🎟 Every ad gives you a roulette ticket.\n👥 Invite friends for more tickets.\n\n📢 @adsgrq`,
+              photo: `${appUrl}/start.jpg`,
+              caption,
               parse_mode: "HTML",
               reply_markup: {
                 inline_keyboard: [
-                  [{ text: "▶️ Open ADS", web_app: { url } }],
-                  [{ text: "📢 Channel", url: "https://t.me/adsgrq" }],
+                  [{ text: "Open ADS", web_app: { url } }],
+                  [{ text: "Join Channel", url: "https://t.me/adsgrq" }],
                 ],
               },
             }),
