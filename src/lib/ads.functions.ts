@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { verifyInitData, db, tg, activeMult } from "./ads.server";
-import { AD_COOLDOWN_SEC, BOOSTERS, CHANNEL, MIN_WITHDRAW, TICKET_PACKS, TON_WALLET, WHEEL } from "./ads.config";
+import { AD_COOLDOWN_SEC, BOOSTERS, CHANNEL, MIN_WITHDRAW, TICKET_PACKS, GRAM_WALLET, WHEEL } from "./ads.config";
 import { BASE, I18N_VERSION } from "./i18n";
 
 const Auth = z.object({ initData: z.string().min(10) });
@@ -137,7 +137,7 @@ export const createBoosterPayment = createServerFn({ method: "POST" })
     const memo = `ADS-${u.telegram_id}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
     await s.from("ads_payments").insert({ telegram_id: u.telegram_id, product: b.key, amount_ton: b.ton, memo });
     const nano = Math.round(b.ton * 1e9);
-    return { memo, amount: b.ton, link: `ton://transfer/${TON_WALLET}?amount=${nano}&text=${encodeURIComponent(memo)}` };
+    return { memo, amount: b.ton, link: `ton://transfer/${GRAM_WALLET}?amount=${nano}&text=${encodeURIComponent(memo)}` };
   });
 
 export const checkPayment = createServerFn({ method: "POST" })
@@ -147,7 +147,7 @@ export const checkPayment = createServerFn({ method: "POST" })
     const { data: p } = await s.from("ads_payments").select("*").eq("memo", data.memo).eq("telegram_id", u.telegram_id).maybeSingle();
     if (!p) throw new Error("invalid");
     if (p.status === "paid") return { paid: true, state: await loadState(s, u.telegram_id) };
-    const r = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${TON_WALLET}&limit=60`);
+    const r = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${GRAM_WALLET}&limit=60`);
     const j = await r.json();
     const tx = (j.result || []).find((t: any) => {
       const msg = t.in_msg?.message || "";
@@ -216,7 +216,7 @@ export const getTranslations = createServerFn({ method: "POST" })
           model: "google/gemini-2.5-flash",
           response_format: { type: "json_object" },
           messages: [
-            { role: "system", content: "You translate mobile app UI strings. Keep it short and natural. Keep placeholders like {n} and brand words ADS, USDT, GRAM, TON untouched. Return ONLY a JSON object with the same keys." },
+            { role: "system", content: "You translate mobile app UI strings. Keep it short and natural. Keep placeholders like {n} and brand words ADS, USDT, GRAM untouched. Return ONLY a JSON object with the same keys." },
             { role: "user", content: `Target language code: ${lang}\n${JSON.stringify(BASE)}` },
           ],
         }),
