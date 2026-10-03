@@ -1,15 +1,17 @@
 export const MONETAG_ZONE = "11946924";
 export const CHANNEL = "adsgrq";
-export const TON_WALLET = "UQAp1QxnLJ2z44IooUovvtVShw7hJBEdxCRV3RlbCYC3D8qj";
+export const GRAM_WALLET = "UQAp1QxnLJ2z44IooUovvtVShw7hJBEdxCRV3RlbCYC3D8qj";
 export const MIN_WITHDRAW = 0.5;
 export const AD_COOLDOWN_SEC = 2;
+export const APP_URL = "https://ads-telegram-app.vercel.app";
+export const BOT_USERNAME = "Spooibot";
 
 export type Currency = "USDT" | "GRAM" | "ADS";
 
 export const BOOSTERS = [
-  { key: "boost_15", mult: 1.5, days: 7, ton: 0.5 },
-  { key: "boost_2", mult: 2, days: 7, ton: 1 },
-  { key: "boost_3", mult: 3, days: 30, ton: 3 },
+  { key: "boost_15", mult: 1.5, days: 7, price: 0.5 },
+  { key: "boost_2", mult: 2, days: 7, price: 1 },
+  { key: "boost_3", mult: 3, days: 30, price: 3 },
 ] as const;
 
 export const TICKET_PACKS = [

@@ -1,4 +1,4 @@
-export const I18N_VERSION = 1;
+export const I18N_VERSION = 2;
 
 export const BASE = {
   nav_earn: "Earn",
@@ -54,10 +54,21 @@ export const BASE = {
   paid: "Paid",
   rejected: "Rejected",
   boosters: "Boosters",
-  boosters_sub: "Pay with TON to multiply luck and earnings.",
+  boosters_sub: "Pay with GRAM to multiply luck and earnings.",
   days: "{n} days",
   buy: "Buy",
-  pay_ton: "Pay with TON",
+  pay_ton: "Pay with GRAM",
+  connect_wallet: "Connect wallet",
+  disconnect: "Disconnect",
+  wallet_connected: "Wallet connected",
+  withdraw_btn: "Withdraw",
+  choose_coin: "Choose a coin",
+  use_wallet: "Use connected wallet",
+  waiting_payment: "Confirming payment on the blockchain…",
+  payment_cancelled: "Payment cancelled",
+  connect_first: "Connect your wallet first",
+  tap_to_spin: "Tap to spin",
+  you_won: "You won",
   verify_payment: "I've paid — verify",
   payment_pending: "Payment not found yet. Wait a minute and try again.",
   booster_on: "Booster activated",

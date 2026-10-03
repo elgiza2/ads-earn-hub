@@ -52,10 +52,12 @@ function Tasks() {
         {state!.tasks.map((task: any) => {
           const done = state!.done.includes(task.key);
           const progress = task.kind === "watch" ? u.ads_watched : task.kind === "invite" ? u.referrals : 0;
-          const ready = task.kind === "channel" ? opened[task.key] : progress >= task.target;
+          const isLink = task.kind === "channel" || task.kind === "link";
+          const ready = isLink ? opened[task.key] : progress >= task.target;
           return (
             <Card key={task.key} className="!p-4">
               <div className="flex items-center gap-3">
+                {task.image && <img src={task.image} alt="" className="h-12 w-12 shrink-0 rounded-xl object-cover" loading="lazy" />}
                 <div className="min-w-0 flex-1">
                   <div className="font-normal">{task.title}</div>
                   <div className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -65,11 +67,11 @@ function Tasks() {
                 </div>
                 {done ? (
                   <span className="rounded-full px-3 py-1.5 text-sm font-normal text-success">{t("done")}</span>
-                ) : task.kind === "channel" && !ready ? (
+                ) : isLink && !ready ? (
                   <button className="pill-ghost !py-2 text-sm" onClick={() => open(task)}>{t("open")}</button>
                 ) : (
                   <button className="pill-btn !px-4 !py-2 text-sm" disabled={!ready || busy === task.key} onClick={() => claim(task.key)}>
-                    {task.kind === "channel" ? t("check") : t("claim")}
+                    {isLink ? t("check") : t("claim")}
                   </button>
                 )}
               </div>

@@ -1,4 +1,5 @@
 import { createHmac } from "crypto";
+import { beginCell } from "@ton/core";
 
 export type TgUser = { id: number; first_name?: string; username?: string; photo_url?: string; language_code?: string };
 
@@ -39,4 +40,16 @@ export async function tg(method: string, body: Record<string, unknown>) {
 export function activeMult(u: { booster_mult: number; booster_until: string | null }) {
   if (u.booster_until && new Date(u.booster_until).getTime() > Date.now()) return Number(u.booster_mult) || 1;
   return 1;
+}
+
+export function commentPayload(text: string) {
+  // TON comment message body: 32-bit zero op-code followed by UTF-8 text.
+  return beginCell().storeUint(0, 32).storeStringTail(text).endCell().toBoc().toString("base64");
+}
+
+export const TASK_BUCKET = "ads-tasks";
+
+export function taskImageUrl(key: string) {
+  const base = process.env["SUPABASE_URL"] || "";
+  return `${base}/storage/v1/object/public/${TASK_BUCKET}/${key}.jpg`;
 }
