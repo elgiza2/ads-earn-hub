@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { AppProvider, useApp } from "@/lib/app-context";
 import { BottomNav } from "@/components/ads/BottomNav";
+import { BoomerangVideoBg } from "@/components/ads/BoomerangVideoBg";
+import { Header, Logo } from "@/components/ads/Shell";
 import { MONETAG_ZONE } from "@/lib/ads.config";
 
 import appCss from "../styles.css?url";
@@ -20,7 +22,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <div className="aura" />
+      
       <div className="glass max-w-md rounded-2xl p-8 text-center">
         <h1 className="text-6xl font-normal">404</h1>
         <div className="mt-6">
@@ -39,7 +41,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <div className="aura" />
+      
       <div className="glass max-w-md rounded-2xl p-8 text-center">
         <h1 className="text-xl font-normal">Something went wrong</h1>
         <button onClick={() => { router.invalidate(); reset(); }} className="pill-btn mt-6">Try again</button>
@@ -60,7 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }, { rel: "icon", href: "/favicon.ico", type: "image/x-icon" }],
+    links: [{ rel: "stylesheet", href: "https://db.onlinewebfonts.com/c/a64ff11d2c24584c767f6257e880dc65?family=Helvetica+Regular" }, { rel: "stylesheet", href: appCss }, { rel: "icon", href: "/favicon.ico", type: "image/x-icon" }],
     scripts: [
       { src: "https://telegram.org/js/telegram-web-app.js" },
       { src: "https://libtl.com/sdk.js", "data-zone": MONETAG_ZONE, "data-sdk": `show_${MONETAG_ZONE}` } as any,
@@ -91,7 +93,7 @@ function Gate({ children }: { children: ReactNode }) {
   if (!ready) {
     return (
       <div className="flex min-h-dvh items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-2 border-glass-border border-t-foreground" />
+        <div className="relative z-10 h-10 w-10 animate-spin rounded-full border-2 border-glass-border border-t-foreground" />
       </div>
     );
   }
@@ -108,6 +110,7 @@ function Gate({ children }: { children: ReactNode }) {
   }
   return (
     <>
+      <Header />
       {children}
       <BottomNav />
     </>
@@ -119,7 +122,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
-        <div className="aura" />
+        <BoomerangVideoBg />
         <Gate>
           <Outlet />
         </Gate>
