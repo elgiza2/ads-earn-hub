@@ -157,7 +157,7 @@ export const checkPayment = createServerFn({ method: "POST" })
     const base = u.booster_until && new Date(u.booster_until).getTime() > Date.now() && Number(u.booster_mult) === b.mult ? new Date(u.booster_until).getTime() : Date.now();
     await s.from("ads_payments").update({ status: "paid", paid_at: new Date().toISOString(), tx_hash: tx.transaction_id?.hash }).eq("id", p.id);
     await s.from("ads_users").update({
-      booster: b.key, booster_mult: Math.max(b.mult, activeMult(u) === 1 ? 0 : Number(u.booster_mult)) || b.mult,
+      booster: b.key, booster_mult: b.mult,
       booster_until: new Date(base + b.days * 86400000).toISOString(),
     }).eq("telegram_id", u.telegram_id);
     return { paid: true, state: await loadState(s, u.telegram_id) };
