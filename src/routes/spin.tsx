@@ -30,7 +30,7 @@ function Spin() {
   const [buying, setBuying] = useState<string | null>(null);
 
   async function go() {
-    if (u.tickets < 1) return toast(t("no_tickets"));
+    if (u.tickets < 1) { toast(t("no_tickets")); return; }
     haptic();
     setSpinning(true);
     setWin(null);

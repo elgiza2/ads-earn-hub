@@ -12,7 +12,7 @@ export function Coin({ c, size = 28 }: { c: string; size?: number }) {
   if (c === "ADS") {
     return (
       <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-accent" style={{ width: size, height: size }}>
-        <img src={SRC.ADS} alt="ADS" width={size} height={size} className="scale-[1.6] object-contain" />
+        <img src={SRC['ADS']} alt="ADS" width={size} height={size} className="scale-[1.6] object-contain" />
       </span>
     );
   }

@@ -2,7 +2,7 @@ import { createHmac } from "crypto";
 
 export type TgUser = { id: number; first_name?: string; username?: string; photo_url?: string; language_code?: string };
 
-export function verifyInitData(initData: string): { user: TgUser; startParam?: string } {
+export function verifyInitData(initData: string): { user: TgUser; startParam: string | undefined } {
   const token = process.env["TELEGRAM_BOT_TOKEN"];
   if (!token) throw new Error("Bot token missing");
   const params = new URLSearchParams(initData);
