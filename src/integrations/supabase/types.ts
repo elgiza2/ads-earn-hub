@@ -49,6 +49,270 @@ export type Database = {
           },
         ]
       }
+      ads_ad_views: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          telegram_id: number
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency: string
+          id?: string
+          telegram_id: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          telegram_id?: number
+        }
+        Relationships: []
+      }
+      ads_payments: {
+        Row: {
+          amount_ton: number
+          created_at: string
+          id: string
+          memo: string
+          paid_at: string | null
+          product: string
+          status: string
+          telegram_id: number
+          tx_hash: string | null
+        }
+        Insert: {
+          amount_ton: number
+          created_at?: string
+          id?: string
+          memo: string
+          paid_at?: string | null
+          product: string
+          status?: string
+          telegram_id: number
+          tx_hash?: string | null
+        }
+        Update: {
+          amount_ton?: number
+          created_at?: string
+          id?: string
+          memo?: string
+          paid_at?: string | null
+          product?: string
+          status?: string
+          telegram_id?: number
+          tx_hash?: string | null
+        }
+        Relationships: []
+      }
+      ads_spins: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          telegram_id: number
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency: string
+          id?: string
+          telegram_id: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          telegram_id?: number
+        }
+        Relationships: []
+      }
+      ads_tasks: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          key: string
+          kind: string
+          link: string | null
+          reward_amount: number
+          reward_currency: string
+          sort_order: number
+          target: number
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key: string
+          kind: string
+          link?: string | null
+          reward_amount: number
+          reward_currency: string
+          sort_order?: number
+          target?: number
+          title: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          key?: string
+          kind?: string
+          link?: string | null
+          reward_amount?: number
+          reward_currency?: string
+          sort_order?: number
+          target?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      ads_translations: {
+        Row: {
+          created_at: string
+          data: Json
+          lang: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          lang: string
+          version: number
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          lang?: string
+          version?: number
+        }
+        Relationships: []
+      }
+      ads_user_tasks: {
+        Row: {
+          created_at: string
+          id: string
+          task_key: string
+          telegram_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          task_key: string
+          telegram_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          task_key?: string
+          telegram_id?: number
+        }
+        Relationships: []
+      }
+      ads_users: {
+        Row: {
+          ads: number
+          ads_watched: number
+          booster: string | null
+          booster_mult: number
+          booster_until: string | null
+          created_at: string
+          first_name: string | null
+          gram: number
+          id: string
+          language: string
+          last_ad_at: string | null
+          photo_url: string | null
+          referrals: number
+          referred_by: number | null
+          telegram_id: number
+          tickets: number
+          updated_at: string
+          usdt: number
+          username: string | null
+        }
+        Insert: {
+          ads?: number
+          ads_watched?: number
+          booster?: string | null
+          booster_mult?: number
+          booster_until?: string | null
+          created_at?: string
+          first_name?: string | null
+          gram?: number
+          id?: string
+          language?: string
+          last_ad_at?: string | null
+          photo_url?: string | null
+          referrals?: number
+          referred_by?: number | null
+          telegram_id: number
+          tickets?: number
+          updated_at?: string
+          usdt?: number
+          username?: string | null
+        }
+        Update: {
+          ads?: number
+          ads_watched?: number
+          booster?: string | null
+          booster_mult?: number
+          booster_until?: string | null
+          created_at?: string
+          first_name?: string | null
+          gram?: number
+          id?: string
+          language?: string
+          last_ad_at?: string | null
+          photo_url?: string | null
+          referrals?: number
+          referred_by?: number | null
+          telegram_id?: number
+          tickets?: number
+          updated_at?: string
+          usdt?: number
+          username?: string | null
+        }
+        Relationships: []
+      }
+      ads_withdrawals: {
+        Row: {
+          address: string
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          status: string
+          telegram_id: number
+        }
+        Insert: {
+          address: string
+          amount: number
+          created_at?: string
+          currency: string
+          id?: string
+          status?: string
+          telegram_id: number
+        }
+        Update: {
+          address?: string
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          status?: string
+          telegram_id?: number
+        }
+        Relationships: []
+      }
       ai_generations: {
         Row: {
           created_at: string
