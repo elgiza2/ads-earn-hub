@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { verifyInitData, db, tg, activeMult } from "./ads.server";
+import { verifyInitData, db, tg, activeMult, commentPayload, taskImageUrl } from "./ads.server";
 import { AD_COOLDOWN_SEC, BOOSTERS, CHANNEL, MIN_WITHDRAW, TICKET_PACKS, GRAM_WALLET, WHEEL } from "./ads.config";
 import { BASE, I18N_VERSION } from "./i18n";
 
@@ -24,7 +24,7 @@ async function loadState(s: any, telegramId: number) {
   ]);
   return {
     user: { ...u, mult: activeMult(u) },
-    tasks: tasks ?? [],
+    tasks: (tasks ?? []).map((t: any) => ({ ...t, image: t.kind === "link" ? taskImageUrl(t.key) : null })),
     done: (done ?? []).map((d: any) => d.task_key) as string[],
     withdrawals: wds ?? [],
     friends: refs ?? [],
@@ -135,9 +135,12 @@ export const createBoosterPayment = createServerFn({ method: "POST" })
     const b = BOOSTERS.find((x) => x.key === data.booster);
     if (!b) throw new Error("invalid");
     const memo = `ADS-${u.telegram_id}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
-    await s.from("ads_payments").insert({ telegram_id: u.telegram_id, product: b.key, amount_ton: b.ton, memo });
-    const nano = Math.round(b.ton * 1e9);
-    return { memo, amount: b.ton, link: `ton://transfer/${GRAM_WALLET}?amount=${nano}&text=${encodeURIComponent(memo)}` };
+    await s.from("ads_payments").insert({ telegram_id: u.telegram_id, product: b.key, amount_ton: b.price, memo });
+    const nano = Math.round(b.price * 1e9);
+    return {
+      memo, amount: b.price, to: GRAM_WALLET, nano: String(nano), payload: commentPayload(memo),
+      link: `ton://transfer/${GRAM_WALLET}?amount=${nano}&text=${encodeURIComponent(memo)}`,
+    };
   });
 
 export const checkPayment = createServerFn({ method: "POST" })
@@ -174,8 +177,8 @@ export const completeTask = createServerFn({ method: "POST" })
     if (already) throw new Error("done");
     if (t.kind === "watch" && u.ads_watched < t.target) throw new Error("not_ready");
     if (t.kind === "invite" && u.referrals < t.target) throw new Error("not_ready");
-    if (t.kind === "channel") {
-      const r = await tg("getChatMember", { chat_id: `@${CHANNEL}`, user_id: u.telegram_id });
+    if (t.kind === "channel" || (t.kind === "link" && /^https:\/\/t\.me\/[A-Za-z0-9_]{4,}\/?$/.test(t.link || ""))) {
+      const r = await tg("getChatMember", { chat_id: t.kind === "channel" ? `@${CHANNEL}` : `@${String(t.link).replace(/^https:\/\/t\.me\//, "").replace(/\/$/, "")}`, user_id: u.telegram_id });
       const st = r?.result?.status;
       if (!["member", "administrator", "creator", "restricted"].includes(st)) throw new Error("not_joined");
     }
