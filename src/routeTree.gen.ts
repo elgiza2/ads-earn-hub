@@ -14,6 +14,7 @@ import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as SpinRouteImport } from './routes/spin'
 import { Route as TasksRouteImport } from './routes/tasks'
 import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as ApiPublicAdsBotRouteImport } from './routes/api/public/ads-bot'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const WalletRoute = WalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAdsBotRoute = ApiPublicAdsBotRouteImport.update({
+  id: '/api/public/ads-bot',
+  path: '/api/public/ads-bot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/spin': typeof SpinRoute
   '/tasks': typeof TasksRoute
   '/wallet': typeof WalletRoute
+  '/api/public/ads-bot': typeof ApiPublicAdsBotRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/spin': typeof SpinRoute
   '/tasks': typeof TasksRoute
   '/wallet': typeof WalletRoute
+  '/api/public/ads-bot': typeof ApiPublicAdsBotRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,22 @@ export interface FileRoutesById {
   '/spin': typeof SpinRoute
   '/tasks': typeof TasksRoute
   '/wallet': typeof WalletRoute
+  '/api/public/ads-bot': typeof ApiPublicAdsBotRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/friends' | '/spin' | '/tasks' | '/wallet'
+  fullPaths:
+    '/' | '/friends' | '/spin' | '/tasks' | '/wallet' | '/api/public/ads-bot'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/friends' | '/spin' | '/tasks' | '/wallet'
-  id: '__root__' | '/' | '/friends' | '/spin' | '/tasks' | '/wallet'
+  to: '/' | '/friends' | '/spin' | '/tasks' | '/wallet' | '/api/public/ads-bot'
+  id:
+    | '__root__'
+    | '/'
+    | '/friends'
+    | '/spin'
+    | '/tasks'
+    | '/wallet'
+    | '/api/public/ads-bot'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +94,7 @@ export interface RootRouteChildren {
   SpinRoute: typeof SpinRoute
   TasksRoute: typeof TasksRoute
   WalletRoute: typeof WalletRoute
+  ApiPublicAdsBotRoute: typeof ApiPublicAdsBotRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +134,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ads-bot': {
+      id: '/api/public/ads-bot'
+      path: '/api/public/ads-bot'
+      fullPath: '/api/public/ads-bot'
+      preLoaderRoute: typeof ApiPublicAdsBotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +150,7 @@ const rootRouteChildren: RootRouteChildren = {
   SpinRoute: SpinRoute,
   TasksRoute: TasksRoute,
   WalletRoute: WalletRoute,
+  ApiPublicAdsBotRoute: ApiPublicAdsBotRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

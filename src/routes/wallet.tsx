@@ -70,39 +70,39 @@ function Wallet() {
           <button key={c} onClick={() => setSel(sel === c ? null : c)} className="flex w-full items-center gap-3 rounded-2xl px-3 py-3.5 text-start transition active:bg-muted">
             <Coin c={c} size={40} />
             <div className="flex-1">
-              <div className="font-semibold">{c}</div>
+              <div className="font-normal">{c}</div>
               <div className="text-xs text-muted-foreground">{t("withdraw")}</div>
             </div>
-            <div className="text-xl font-semibold tabular-nums">{fmt(Number(u[c.toLowerCase() as "usdt"]), c)}</div>
+            <div className="text-xl font-normal tabular-nums">{fmt(Number(u[c.toLowerCase() as "usdt"]), c)}</div>
           </button>
         ))}
       </Card>
 
       {sel && (
         <Card className="mt-4 animate-in fade-in slide-in-from-top-2">
-          <div className="mb-3 flex items-center gap-2 font-semibold"><Coin c={sel} size={22} /> {t("withdraw")} {sel}</div>
+          <div className="mb-3 flex items-center gap-2 font-normal"><Coin c={sel} size={22} /> {t("withdraw")} {sel}</div>
           <input inputMode="decimal" placeholder={`${t("amount")} · ${t("min_withdraw", MIN_WITHDRAW)}`} value={amount} onChange={(e) => setAmount(e.target.value)} className="glass-strong mb-3 w-full rounded-2xl bg-transparent px-4 py-3.5 outline-none placeholder:text-muted-foreground" />
           <input placeholder={t("address")} value={address} onChange={(e) => setAddress(e.target.value)} dir="ltr" className="glass-strong mb-4 w-full rounded-2xl bg-transparent px-4 py-3.5 outline-none placeholder:text-muted-foreground" />
           <button className="pill-btn w-full" disabled={busy || !amount || address.length < 10} onClick={withdraw}>{t("submit")}</button>
         </Card>
       )}
 
-      <h2 className="mb-1 mt-7 text-xl font-bold">{t("boosters")}</h2>
+      <h2 className="mb-1 mt-7 text-xl font-normal">{t("boosters")}</h2>
       <p className="mb-3 text-sm text-muted-foreground">{t("boosters_sub")}</p>
-      {u.mult > 1 && <p className="mb-3 text-sm font-semibold text-accent">{t("booster_active", u.mult)}</p>}
+      {u.mult > 1 && <p className="mb-3 text-sm font-normal text-accent">{t("booster_active", u.mult)}</p>}
       <div className="grid grid-cols-3 gap-3">
         {BOOSTERS.map((b) => (
-          <button key={b.key} disabled={busy} onClick={() => startBooster(b.key)} className="glass rounded-3xl p-4 text-center transition active:scale-95">
-            <div className="text-2xl font-black">×{b.mult}</div>
+          <button key={b.key} disabled={busy} onClick={() => startBooster(b.key)} className="glass rounded-2xl p-4 text-center transition active:scale-95">
+            <div className="text-2xl font-normal">×{b.mult}</div>
             <div className="text-xs text-muted-foreground">{t("days", b.days)}</div>
-            <div className="mt-3 flex items-center justify-center gap-1 text-sm font-semibold"><Coin c="TON" size={16} /> {b.ton}</div>
+            <div className="mt-3 flex items-center justify-center gap-1 text-sm font-normal"><Coin c="TON" size={16} /> {b.ton}</div>
           </button>
         ))}
       </div>
 
       {pay && (
         <Card className="mt-4">
-          <div className="flex items-center gap-2 font-semibold"><Coin c="TON" size={20} /> {pay.amount} TON</div>
+          <div className="flex items-center gap-2 font-normal"><Coin c="TON" size={20} /> {pay.amount} TON</div>
           <div className="glass-strong mt-3 rounded-2xl px-4 py-3 font-mono text-sm" dir="ltr">{pay.memo}</div>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button className="pill-ghost" onClick={() => window.Telegram?.WebApp?.openLink(pay.link)}>{t("pay_ton")}</button>
@@ -113,7 +113,7 @@ function Wallet() {
 
       {state!.withdrawals.length > 0 && (
         <>
-          <h2 className="mb-3 mt-7 text-xl font-bold">{t("history")}</h2>
+          <h2 className="mb-3 mt-7 text-xl font-normal">{t("history")}</h2>
           <Card className="!p-2">
             {state!.withdrawals.map((w: any) => (
               <div key={w.id} className="flex items-center gap-3 border-b border-border px-3 py-3 last:border-0">

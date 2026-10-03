@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { Disc3 } from "lucide-react";
 import { toast } from "sonner";
 import { Page, Card } from "@/components/ads/Shell";
 import { Coin } from "@/components/ads/Coin";
@@ -78,34 +79,35 @@ function Spin() {
               <div key={i} className="absolute left-1/2 top-0 h-1/2 origin-bottom -translate-x-1/2" style={{ transform: `translateX(-50%) rotate(${i * SEG + SEG / 2}deg)` }}>
                 <div className="flex flex-col items-center gap-1 pt-3">
                   <Coin c={s.c} size={22} />
-                  <span className="text-[11px] font-bold tabular-nums">{fmt(s.a, s.c)}</span>
+                  <span className="text-[11px] font-normal tabular-nums">{fmt(s.a, s.c)}</span>
                 </div>
               </div>
             ))}
-            <div className="glass-strong absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-background text-lg font-black">ADS</div>
+            <div className="glass-strong absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-background text-lg font-normal">ADS</div>
           </div>
         </div>
 
         <div className="mt-5 h-8">
           {win && (
-            <div className="flex items-center justify-center gap-2 text-xl font-bold animate-in zoom-in-75">
+            <div className="flex items-center justify-center gap-2 text-xl font-normal animate-in zoom-in-75">
               <Coin c={win.currency} size={26} /> +{fmt(win.amount, win.currency)} {win.currency}
             </div>
           )}
         </div>
 
-        <button className="pill-accent mt-3 w-full text-lg" disabled={spinning} onClick={go}>
+        <button className="pill-accent mt-3 w-full justify-start" disabled={spinning} onClick={go}>
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-accent-foreground"><Disc3 size={18} strokeWidth={2.5} /></span>
           {t("spin_btn")} · {t("tickets_n", u.tickets)}
         </button>
       </Card>
 
-      <h2 className="mb-3 mt-7 text-xl font-bold">{t("buy_tickets")}</h2>
+      <h2 className="mb-3 mt-7 text-xl font-normal">{t("buy_tickets")}</h2>
       <div className="grid grid-cols-3 gap-3">
         {TICKET_PACKS.map((p) => (
-          <button key={p.key} disabled={buying === p.key} onClick={() => buy(p.key)} className="glass rounded-3xl p-4 text-center transition active:scale-95">
-            <div className="text-2xl font-bold">{p.tickets}</div>
+          <button key={p.key} disabled={buying === p.key} onClick={() => buy(p.key)} className="glass rounded-2xl p-4 text-center transition active:scale-95">
+            <div className="text-2xl font-normal">{p.tickets}</div>
             <div className="text-xs text-muted-foreground">{t("tickets")}</div>
-            <div className="mt-3 flex items-center justify-center gap-1 text-sm font-semibold">
+            <div className="mt-3 flex items-center justify-center gap-1 text-sm font-normal">
               <Coin c="GRAM" size={16} /> {fmt(p.gram)}
             </div>
           </button>
