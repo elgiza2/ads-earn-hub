@@ -3,7 +3,6 @@ import ads from "@/assets/ads.png";
 
 const SRC: Record<string, string> = {
   USDT: "https://assets.coingecko.com/coins/images/325/small/Tether.png",
-  TON: "https://assets.coingecko.com/coins/images/17980/small/ton_symbol.png",
   GRAM: gram,
   ADS: ads,
 };
