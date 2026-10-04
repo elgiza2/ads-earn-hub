@@ -14,26 +14,9 @@ export function Logo() {
   );
 }
 
-export function Header() {
-  const { state } = useApp();
-  const u = state?.user;
-  return (
-    <header className="relative z-20 mx-auto flex max-w-md items-center justify-between px-4 pt-4">
-      <Logo />
-      {u && (
-        <div className="flex items-center gap-2 rounded-xl bg-primary p-1 pr-3 text-sm text-primary-foreground">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-[11px] text-accent-foreground">{u.tickets}</span>
-          <Coin c="USDT" size={16} />
-          <span className="tabular-nums">{fmt(Number(u.usdt))}</span>
-        </div>
-      )}
-    </header>
-  );
-}
-
 export function Page({ title, sub, children }: { title: string; sub?: string; children: ReactNode }) {
   return (
-    <main className="relative z-10 mx-auto max-w-md px-4 pb-32 pt-8">
+    <main className="relative z-10 mx-auto max-w-md px-4 pb-32" style={{ paddingTop: "calc(var(--tg-safe-area-inset-top, 0px) + var(--tg-content-safe-area-inset-top, 0px) + 1.5rem)" }}>
       <div className="mb-6">
         <h1 className="animate-fade-up delay-1 text-4xl leading-[1.1] tracking-tight lowercase">{title}</h1>
         {sub && <p className="animate-fade-up delay-2 mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">{sub}</p>}

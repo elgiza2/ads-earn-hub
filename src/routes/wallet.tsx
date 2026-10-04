@@ -115,9 +115,7 @@ function Wallet() {
               <div className="font-normal">{c}</div>
               <div className="text-sm tabular-nums text-muted-foreground">{fmt(Number(u[c.toLowerCase() as "usdt"]), c)}</div>
             </div>
-            {c !== "ADS" && (
-              <button className="pill-btn !px-4 !py-2 text-sm" onClick={() => setSel(sel === c ? null : c)}>{t("withdraw_btn")}</button>
-            )}
+            <button className="pill-btn !px-4 !py-2 text-sm" onClick={() => setSel(sel === c ? null : c)}>{t("withdraw_btn")}</button>
           </div>
         ))}
       </Card>
