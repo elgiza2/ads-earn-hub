@@ -76,16 +76,12 @@ function Spin() {
 
         <div className="glass-strong absolute inset-0 rounded-full p-3 shadow-2xl">
           {Array.from({ length: 24 }).map((_, i) => (
-            <span
-              key={i}
-              className={`absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full bg-foreground ${spinning ? "animate-pulse" : ""}`}
-              style={{
-                transform: `rotate(${i * 15}deg) translateY(calc(-50% - min(42.5vw, 163px)))`,
-                marginLeft: -3, marginTop: -3,
-                opacity: i % 2 ? 0.35 : 0.95,
-                animationDelay: `${(i % 4) * 120}ms`,
-              }}
-            />
+            <div key={i} className="pointer-events-none absolute inset-[3px]" style={{ transform: `rotate(${i * 15}deg)` }}>
+              <span
+                className={`absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-foreground ${spinning ? "animate-pulse" : ""}`}
+                style={{ opacity: i % 2 ? 0.35 : 0.95, animationDelay: `${(i % 4) * 120}ms` }}
+              />
+            </div>
           ))}
 
           <div
@@ -132,8 +128,8 @@ function Spin() {
         </button>
       </div>
 
-      <div className="mt-6 min-h-[76px]">
-        {win ? (
+      <div className="mt-6 space-y-3">
+        {win && (
           <Card className="flex items-center gap-4 !p-4 animate-in zoom-in-90">
             <Coin c={win.currency} size={44} />
             <div>
@@ -141,11 +137,10 @@ function Spin() {
               <div className="text-2xl tabular-nums">+{fmt(win.amount, win.currency)} {win.currency}</div>
             </div>
           </Card>
-        ) : (
-          <button className="pill-btn w-full !py-4 text-base" disabled={spinning} onClick={go}>
-            {spinning ? "…" : `${t("tap_to_spin")} · ${t("tickets_n", u.tickets)}`}
-          </button>
         )}
+        <button className="pill-btn w-full !py-4 text-base" disabled={spinning} onClick={go}>
+          {spinning ? "…" : `${t("tap_to_spin")} · ${t("tickets_n", u.tickets)}`}
+        </button>
       </div>
 
       <h2 className="mb-3 mt-7 text-xl font-normal">{t("buy_tickets")}</h2>
