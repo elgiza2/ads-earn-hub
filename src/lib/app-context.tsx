@@ -44,9 +44,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (!wa || !wa.initData) { setInTelegram(false); setReady(true); return; }
       wa.ready(); wa.expand();
       try {
-        wa.setHeaderColor?.("#141827"); wa.setBackgroundColor?.("#141827");
-        if (wa.isVersionAtLeast?.("8.0") && !wa.isFullscreen) wa.requestFullscreen?.();
+        wa.setHeaderColor?.("#141827"); wa.setBackgroundColor?.("#141827"); wa.setBottomBarColor?.("#141827");
+        wa.disableVerticalSwipes?.();
       } catch {}
+      goFullscreen(wa);
       const lang = ((wa.initDataUnsafe?.user?.language_code || navigator.language || "en").split("-")[0] || "en").toLowerCase();
       setRtl(RTL.has(lang));
       document.documentElement.lang = lang;
@@ -86,6 +87,18 @@ export function haptic(kind: "light" | "success" | "error" = "light") {
   if (!h) return;
   if (kind === "light") h.impactOccurred("light");
   else h.notificationOccurred(kind);
+}
+
+// Fullscreen (Telegram 8.0+). Retries a few times because some clients ignore the
+// first request while the mini app is still animating open; falls back to the first tap.
+function goFullscreen(wa: any) {
+  if (!wa?.requestFullscreen || !wa.isVersionAtLeast?.("8.0")) return;
+  const tryIt = () => { try { if (!wa.isFullscreen) wa.requestFullscreen(); } catch {} };
+  tryIt();
+  [300, 1000, 2500].forEach((ms) => setTimeout(tryIt, ms));
+  const onTap = () => { tryIt(); window.removeEventListener("pointerdown", onTap); };
+  window.addEventListener("pointerdown", onTap);
+  try { wa.onEvent?.("fullscreenChanged", () => wa.expand?.()); } catch {}
 }
 
 export function errMsg(e: unknown) {
